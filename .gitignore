@@ -17,3 +17,5 @@ yarn-error.log*
 !.yarn/releaes
 !.yarn/sdks
 !.yarn/versions
+
+.DS_STORE
