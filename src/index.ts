@@ -5,10 +5,12 @@ import router from './routes';
 
 const app = express();
 
+// Middleware
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
-app.use('/', router);
+// Router
+app.use(router);
 
 app.listen(Env.port, () => {
   console.log(`Server running on port ${Env.port}`);
