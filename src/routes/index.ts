@@ -1,15 +1,8 @@
 import { Router } from 'express';
+import waypointRouter from './waypoints';
 
 const router = Router();
 
-router.get('/', (_req, res) => {
-  res.json({ message: 'ok' });
-});
-
-
-router.get('/hello', (_req, res) => {
-  res.json({ message: 'hillo' });
-});
-
+router.use('/waypoints', waypointRouter);
 
 export default router;
