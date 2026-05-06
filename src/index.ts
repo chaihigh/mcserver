@@ -1,17 +1,20 @@
 import express from 'express';
 import cors from 'cors';
-import {Env} from "./env";
+import { Env } from './env';
+import { connectDb } from './db';
 import router from './routes';
 
 const app = express();
 
-// Middleware
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
-
-// Router
 app.use(router);
 
-app.listen(Env.port, () => {
-  console.log(`Server running on port ${Env.port}`);
+connectDb().then(() => {
+  app.listen(Env.port, () => {
+    console.log(`Server running on port ${Env.port}`);
+  });
+}).catch((err) => {
+  console.error('Failed to connect to MongoDB:', err);
+  process.exit(1);
 });
