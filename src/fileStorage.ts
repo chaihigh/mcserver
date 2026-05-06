@@ -46,7 +46,7 @@ export class FileStorage<T extends { id: number }> {
   }
 
   replace<ID extends number>(id: ID, data: Omit<T, 'id'> & { id: ID }) {
-    this.data = this.data.map(d => d.id === id ? ({...data, id}) : d);
+    this.data = this.data.map(d => d.id === id ? ({...data, id}) as unknown as T : d);
     this.save();
   }
 

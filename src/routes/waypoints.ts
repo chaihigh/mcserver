@@ -1,36 +1,26 @@
 import { Router } from 'express';
-import { FileStorage } from '../fileStorage';
-
-const WaypointStorage = new FileStorage<{
-  id: number,
-  name: string,
-  coord: {
-    x: number,
-    y: number,
-    z: number,
-  }
-}>('data/waypoints.json');
+import { WaypointModel } from '../models/Waypoint';
 
 const router = Router();
 
-router.get('/', (_req, res) => {
-  const waypoints = WaypointStorage.getAll();
+router.get('/', async (_req, res) => {
+  const waypoints = await WaypointModel.find();
   res.json(waypoints);
 });
 
-router.post('/', (req, res) => {
-  const waypoint = WaypointStorage.create(req.body);
+router.post('/', async (req, res) => {
+  const waypoint = await WaypointModel.create(req.body);
   res.json(waypoint);
 });
 
-router.delete('/', (req, res) => {
-  WaypointStorage.clear();
+router.delete('/', async (_req, res) => {
+  await WaypointModel.deleteMany();
   res.json([]);
-})
+});
 
-router.delete('/:id', (req, res) => {
-  WaypointStorage.delete(req.params.id);
+router.delete('/:id', async (req, res) => {
+  await WaypointModel.findByIdAndDelete(req.params.id);
   res.json(null);
-})
+});
 
 export default router;
